@@ -6,7 +6,7 @@ After each state change, the current state of the table will be printed, with a
 '!' representing an available chop-stick, a '|' representing a chop-stick in use
 and a 'O' representing a philosopher. e.g. '  |O  !' would be printed when a 
 philosopher is using her chopstick on the left, but not using the one on her right. 
-The program will continue until the hole process is deadlocked.
+The program will continue until the whole process is deadlocked.
 
 NOTE: The printing of the table is not synchronized, so it is possible to print a chop-stick
 as in use if the print method is called while the chop-stick is changing states.
