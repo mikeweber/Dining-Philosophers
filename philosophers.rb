@@ -116,9 +116,12 @@ class ChopStick
 end
 
 class DinnerTable
-  def initialize(size)
+  attr_reader :philosophers
+  
+  def initialize(size, shoes = nil)
     @chop_sticks = []
     @philosophers = []
+    @shoes = shoes
     size.times do |i|
       @chop_sticks << ChopStick.new(i)
     end
@@ -130,6 +133,7 @@ class DinnerTable
   end
   
   def run
+    @shoes.draw_table(self)
     threads = []
     @philosophers.each_with_index do |philosopher, i|
       threads << Thread.new {
@@ -141,13 +145,24 @@ class DinnerTable
     prev_msg = ""
     locks = 0
     while locks < 10
-      msg = self.to_s
-      puts msg unless msg == prev_msg
-      prev_msg = msg
+      if @shoes
+      else
+        msg = self.to_s
+        say msg unless msg == prev_msg
+        prev_msg = msg
+      end
       locks = self.locked? ? (locks + 1) : 0
     end
-    puts "deadlocked"
-    puts self.to_s
+    say "deadlocked"
+    say self.to_s
+  end
+  
+  def say(msg)
+    if @shoes
+      @shoes.para(msg)
+    else
+      puts(msg)
+    end
   end
   
   def locked?
@@ -163,5 +178,3 @@ class DinnerTable
     stats
   end
 end
-
-DinnerTable.new(5)
